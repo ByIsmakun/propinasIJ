@@ -168,16 +168,16 @@
                         <div class="col-md-4 mb-4">
                             <div class="card dashboard-card bg-success text-white clickable">
                                 <div class="card-body">
-                                    <h5 class="card-title">Ismael debe a Pedro</h5>
-                                    <h2 class="card-text" id="ismaelDebt">&#x24;0.00</h2>
+                                    <h5 class="card-title">Jonathan debe a Ivan</h5>
+                                    <h2 class="card-text" id="jonathanDebt">&#x24;0.00</h2>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 mb-4">
                             <div class="card dashboard-card bg-info text-white clickable">
                                 <div class="card-body">
-                                    <h5 class="card-title">Pedro debe a Ismael</h5>
-                                    <h2 class="card-text" id="pedroDebt">&#x24;0.00</h2>
+                                    <h5 class="card-title">Ivan debe a Jonathan</h5>
+                                    <h2 class="card-text" id="jonathanDebt">&#x24;0.00</h2>
                                 </div>
                             </div>
                         </div>
@@ -314,8 +314,8 @@
                         <div class="col-md-3">
                             <select class="form-select" id="filterReceiver">
                                 <option value>Todos los Receptores</option>
-                                <option value="Ismael">Ismael</option>
-                                <option value="Nathanael">Pedro</option>
+                                <option value="Jonathan">Jonathan</option>
+                                <option value="Ivan">Ivan</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -493,8 +493,8 @@
                     <div class="mb-3">
                         <label class="form-label">Receptor</label>
                         <select class="form-select" name="receiver" required>
-                            <option value="Ismael">Ismael</option>
-                            <option value="Pedro">Pedro</option>
+                            <option value="Jonathan">Jonathan</option>
+                            <option value="Ivan">Ivan</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -632,13 +632,13 @@ function updateDashboard() {
     EUR: 0,
     MXN: 0
   };
-  const ismaelDebts = {
+  const jonathanDebts = {
     USD: 0,
     DOP: 0,
     EUR: 0,
     MXN: 0
   };
-  const pedroDebts = {
+  const ivanDebts = {
     USD: 0,
     DOP: 0,
     EUR: 0,
@@ -653,16 +653,16 @@ function updateDashboard() {
     }
     if (transaction.status === 'pending') {
       const splitAmount = amount / 2;
-      if (transaction.receiver === 'Ismael') {
-        ismaelDebts[currency] += splitAmount;
+      if (transaction.receiver === 'Jonathan') {
+        jonathanDebts[currency] += splitAmount;
       } else {
-        pedroDebts[currency] += splitAmount;
+        ivanDebts[currency] += splitAmount;
       }
     }
   });
   updateTotalsDisplay('monthlyTotal', monthlyTotals);
-  updateTotalsDisplay('ismaelDebt', ismaelDebts);
-  updateTotalsDisplay('pedroDebt', pedroDebts);
+  updateTotalsDisplay('jonathanDebt', jonathanDebts);
+  updateTotalsDisplay('ivanDebt', ivanDebts);
   document.querySelectorAll('.dashboard-card').forEach(card => {
     if (card.querySelector('.card-text')) {
       card.onclick = () => {
@@ -670,10 +670,10 @@ function updateDashboard() {
         let details;
         if (cardId === 'monthlyTotal') {
           details = generateMonthlyTotalDetails(monthlyTotals);
-        } else if (cardId === 'ismaelDebt') {
-          details = generateDebtDetails('Ismael', ismaelDebts);
-        } else if (cardId === 'pedroDebt') {
-          details = generateDebtDetails('Pedro', pedroDebts);
+        } else if (cardId === 'jonathanDebt') {
+          details = generateDebtDetails('Jonathan', jonathanDebts);
+        } else if (cardId === 'ivanDebt') {
+          details = generateDebtDetails('Ivan', ivanDebts);
         }
         if (details) {
           showDashboardCardDetails(details);
@@ -1151,7 +1151,7 @@ function generateDebtDetails(person, debts) {
   const totalUSD = currencies.reduce((sum, [curr, amount]) => {
     return sum + amount;
   }, 0);
-  const otherPerson = person === 'Ismael' ? 'Nathanael' : 'Ismael';
+  const otherPerson = person === 'Jonathan' ? 'Ivan' : 'Jonathan';
   return {
     title: `Detalles de Deuda - ${person}`,
     content: `
